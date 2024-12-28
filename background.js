@@ -1,5 +1,20 @@
-chrome.action.onClicked.addListener((tab) => {
+// Enable toggling the side panel on action click
+chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true })
+  .catch((error) => console.error(error));
+
+// Handle extension icon clicks
+chrome.action.onClicked.addListener(async (tab) => {
+  const options = await chrome.sidePanel.getOptions({ tabId: tab.id });
+  if (options?.enabled) {
+    // If panel is enabled, close it
+    await chrome.sidePanel.setOptions({
+      tabId: tab.id,
+      enabled: false
+    });
+  } else {
+    // If panel is disabled, open it
     chrome.sidePanel.open({ windowId: tab.windowId });
+  }
 });
 
 chrome.runtime.onInstalled.addListener(() => {

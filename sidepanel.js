@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Request access to the webcam with ideal resolution
         const stream = await navigator.mediaDevices.getUserMedia({ 
             video: { 
-                width: { ideal: 1280 },
-                height: { ideal: 720 }
+                width: { max: 99999 },
+                height: { max: 99999 }
             } 
         });
 
@@ -26,7 +26,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Provide more specific error guidance
         switch (error.name) {
             case 'NotAllowedError':
-                errorMessage.textContent = 'Webcam access was denied. Please check your browser permissions and try again.';
+                errorMessage.innerHTML = `
+                    <div style="
+                        background: #4285f4;
+                        color: white;
+                        padding: 20px;
+                        border-radius: 4px;
+                        font-family: 'Google Sans', Arial, sans-serif;
+                        max-width: 400px;
+                        margin: 0 auto;
+                        box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+                    ">
+                        <h3 style="margin: 0 0 15px 0; font-weight: 500;">Webcam Access Required</h3>
+                        <ol style="margin: 0; padding-left: 20px;">
+                            <li style="margin-bottom: 10px;">Pin the extension by clicking the puzzle icon and selecting "Pin"</li>
+                            <li style="margin-bottom: 10px;">Right-click the extension icon and select "Settings"</li>
+                            <li style="margin-bottom: 10px;">Grant webcam permissions in the settings</li>
+                            <li style="margin-bottom: 10px;">Close and reopen the side panel</li>
+                        </ol>
+                    </div>
+                `;
                 break;
             case 'NotFoundError':
                 errorMessage.textContent = 'No webcam was found. Please connect a webcam and try again.';
