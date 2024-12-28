@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "SideCam",
+  "version": "1.0",
+  "description": "Display webcam in Chrome's side panel",
+  "permissions": [
+    "sidePanel",
+    "webview",
+    "contextMenus"
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "action": {
+    "default_title": "SideCam"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_page": "options.html"
+}
